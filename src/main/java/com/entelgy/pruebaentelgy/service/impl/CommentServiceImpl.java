@@ -7,7 +7,6 @@ import com.entelgy.pruebaentelgy.model.response.CommentResponse;
 import com.entelgy.pruebaentelgy.model.response.Response;
 import com.entelgy.pruebaentelgy.service.CommentService;
 import com.utils.Constants;
-import com.utils.StatusEnum;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
@@ -28,27 +27,19 @@ public class CommentServiceImpl implements CommentService {
         
         Response<List<String>> response = new Response<>();
 
-        try{
-
-            ResponseEntity<List<CommentResponse>> responseEntity = 
-            restTemplate.exchange(
-                Constants.URL_COMMENT,
-                HttpMethod.GET,
-                null,
-                new ParameterizedTypeReference<List<CommentResponse>>() {});
-            
-            List<CommentResponse> comments = responseEntity.getBody();
-            List<String> commentsString = comments.stream().map( c -> {
-                return c.getPostId()+"|"+c.getId()+"|"+c.getEmail();
-            }).collect(Collectors.toList());
-            
-            response.setData(commentsString);
-            response.setStatus(StatusEnum.STATUS_SUCCESSFULL.create());
-
-        } catch ( Exception e) {
-            response.setStatus(StatusEnum.STATUS_FAIL.create());
-        }
-
+        ResponseEntity<List<CommentResponse>> responseEntity = 
+        restTemplate.exchange(
+            Constants.URL_COMMENT,
+            HttpMethod.GET,
+            null,
+            new ParameterizedTypeReference<List<CommentResponse>>() {});
+        
+        List<CommentResponse> comments = responseEntity.getBody();
+        List<String> commentsString = comments.stream().map( c -> {
+            return c.getPostId()+"|"+c.getId()+"|"+c.getEmail();
+        }).collect(Collectors.toList());
+        
+        response.setData(commentsString);
         return response;
     }
 }

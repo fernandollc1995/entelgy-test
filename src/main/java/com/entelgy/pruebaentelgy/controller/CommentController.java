@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.entelgy.pruebaentelgy.model.response.Response;
 import com.entelgy.pruebaentelgy.service.CommentService;
-import com.utils.StatusEnum;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,14 +22,7 @@ public class CommentController {
     @PostMapping(value = "/comments")
     public ResponseEntity<Response<List<String>>> loadAllComments(){
         Response<List<String>> comments = commentService.loadAllComments();
-
-        if (StatusEnum.STATUS_SUCCESSFULL.isCode(comments.getStatus())) {
-
-            return new ResponseEntity<>(comments, HttpStatus.OK);
-        } else {
-
-            return new ResponseEntity<>(comments, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        return new ResponseEntity<>(comments, HttpStatus.OK);
     }
 
 }

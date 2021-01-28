@@ -32,7 +32,7 @@ public class CommentTest{
     private RestTemplate restTemplate;
 
     @Test
-    public void loadAllCommentsServiceTest()
+    public void loadAllCommentsServiceTestU()
     {
         List<CommentResponse> commentsResponse = new ArrayList<>();
         CommentResponse commentResponse = new CommentResponse();
